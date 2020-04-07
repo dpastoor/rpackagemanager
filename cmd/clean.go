@@ -48,11 +48,12 @@ func clean(cmd *cobra.Command, args []string) error {
 	}
 	if cleanAll {
 		fmt.Println("Cleaning all.")
-		err = cleanCacheFolders()
+		// Have to clean pkgrDbs first, as the required call to "plan" will cause Tarballs to be appear in cache and need cleaning.
+		err = cleanPackageDatabases("ALL")
 		if err != nil {
 			return err
 		}
-		err = cleanPackageDatabases("ALL")
+		err = cleanCacheFolders()
 		if err != nil {
 			return err
 		}

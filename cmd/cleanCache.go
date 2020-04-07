@@ -96,23 +96,33 @@ func cleanCacheFolders() error {
 	// Clear the tarballs
 	log.Info("clearing unpacked tarballs from the cache")
 	for _, tgzFile := range cfg.Tarballs {
-		openedTgz, err := fs.Open(tgzFile)
-		if err != nil {
-			log.WithField("file", tgzFile).Warn("could not find untarred directory in local cache for file")
-			continue
+		if !strings.HasPrefix(tgzFile, "http") {
+			openedTgz, err := fs.Open(tgzFile)
+			if err != nil {
+				log.WithField("file", tgzFile).Warn("could not find untarred directory in local cache for file")
+				continue
+			}
+			hashedDirectoryName, err := getHashedTarballName(openedTgz)
+			if err != nil {
+				log.WithField("file", tgzFile).Warn("could not get hashed name for tarball when cleaning cache. skipping delete...")
+				continue
+			}
+			err = fs.RemoveAll(filepath.Join(cfg.Cache, hashedDirectoryName))
+			if err != nil {
+				log.WithFields(log.Fields{
+					"file":  tgzFile,
+					"error": err,
+				}).Error("error removing tarball from cache")
+			}
 		}
-		hashedDirectoryName, err := getHashedTarballName(openedTgz)
-		if err != nil {
-			log.WithField("file", tgzFile).Warn("could not get hashed name for tarball when cleaning cache. skipping delete...")
-			continue
-		}
-		err = fs.RemoveAll(filepath.Join(cfg.Cache, hashedDirectoryName))
-		if err != nil {
-			log.WithFields(log.Fields{
-				"file": tgzFile,
-				"error": err,
-			}).Error("error removing tarball from cache")
-		}
+	}
+	remoteDownloadsDir, _ := getTarballDownloadFolder(fs, cachePath)
+	err := fs.RemoveAll(remoteDownloadsDir)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"dir":  remoteDownloadsDir,
+			"error": err,
+		}).Error("error removing downloaded tarball dir from cache")
 	}
 
 	return nil

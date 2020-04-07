@@ -3,6 +3,7 @@ Version: 1
 
 Tarballs:
   - "../../localrepos/tarballs/R6_2.4.0.tar.gz"
+  - "https://cran.r-project.org/src/contrib/Archive/withr/withr_2.1.1.tar.gz" # has only base dependencies
 
 Packages:
   - pillar

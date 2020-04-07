@@ -2,6 +2,9 @@ package cmd
 
 import (
 	"bytes"
+	"crypto/md5"
+	"fmt"
+	"io"
 
 	"encoding/json"
 
@@ -29,6 +32,13 @@ func userCache(pc string) string {
 	pkgrCacheDir := filepath.Join(cdir, "pkgr")
 
 	return pkgrCacheDir
+}
+
+func hashString(s string) string {
+	h := md5.New()
+	io.WriteString(h, s)
+	urlHash := fmt.Sprintf("%x", h.Sum(nil))
+	return urlHash[:12]
 }
 
 // If user has not specified a thread count themselves, will limit the user to 8 threads max to avoid issues.
