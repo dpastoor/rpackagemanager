@@ -14,7 +14,7 @@ require (
 	github.com/spf13/afero v1.5.1
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/viper v1.7.0
-	github.com/stretchr/testify v1.4.0
+	github.com/stretchr/testify v1.7.0
 	github.com/thoas/go-funk v0.7.0
 	github.com/xlab/treeprint v0.0.0-20181112141820-a009c3971eca
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
