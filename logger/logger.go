@@ -21,7 +21,6 @@ type LogrusFileHook struct {
 func init() {
 	// Log = log.New()
 	log.SetOutput(os.Stdout)
-	log.SetFormatter(&log.TextFormatter{ForceColors: true})
 }
 
 // NewLogrusFileHook

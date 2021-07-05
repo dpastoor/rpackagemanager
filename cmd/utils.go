@@ -16,7 +16,7 @@ import (
 func userCache(pc string) string {
 	// if actually set then use that cache dir
 	if pc != "" {
-		log.WithField("dir", pc).Trace("package cache directory set by user")
+		log.WithField("dir", pc).Debug("package cache directory set by user")
 		return pc
 	}
 	cdir, err := os.UserCacheDir()
@@ -24,9 +24,9 @@ func userCache(pc string) string {
 		log.Warn("could not use user cache dir, using temp dir")
 		cdir = os.TempDir()
 	}
-	log.WithField("dir", cdir).Trace("default package cache directory")
 
 	pkgrCacheDir := filepath.Join(cdir, "pkgr")
+	log.WithField("dir", pkgrCacheDir).Debug("default package cache directory")
 
 	return pkgrCacheDir
 }

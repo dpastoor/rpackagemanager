@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/metrumresearchgroup/pkgr/cran"
 	"github.com/thoas/go-funk"
+	"sort"
 
 	"github.com/deckarep/golang-set"
 )
@@ -116,6 +117,10 @@ func (ip *InstallPlan) InvertDependencies() map[string][]string {
 			d = append(d, pkg)
 			idb[p] = d
 		}
+	}
+	for p := range idb {
+		// lets sort everything so deps will be alphabetical
+		sort.Strings(idb[p])
 	}
 	return idb
 }

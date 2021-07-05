@@ -16,6 +16,7 @@ package cmd
 
 import (
 	"fmt"
+	"sort"
 
 	"github.com/metrumresearchgroup/pkgr/logger"
 
@@ -44,6 +45,7 @@ var installedFrom bool
 
 func recurseDeps(pkg string, ddb gpsr.InstallPlan, t treeprint.Tree) {
 	pkgDeps := ddb.DepDb[pkg]
+	sort.Strings(pkgDeps)
 	if len(pkgDeps) == 0 {
 		return
 	}
@@ -76,6 +78,9 @@ func inspect(cmd *cobra.Command, args []string) error {
 			allDeps = ip.InvertDependencies()
 		} else {
 			allDeps = ip.DepDb
+		}
+		for p := range allDeps {
+			sort.Strings(allDeps[p])
 		}
 		if len(args) > 0 {
 			for _, arg := range args {

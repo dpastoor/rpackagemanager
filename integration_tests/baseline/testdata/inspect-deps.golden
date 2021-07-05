@@ -1,0 +1,28 @@
+{
+  "cli": [
+    "glue"
+  ],
+  "ellipsis": [
+    "rlang"
+  ],
+  "lifecycle": [
+    "glue",
+    "rlang"
+  ],
+  "pillar": [
+    "cli",
+    "crayon",
+    "ellipsis",
+    "fansi",
+    "glue",
+    "lifecycle",
+    "rlang",
+    "utf8",
+    "vctrs"
+  ],
+  "vctrs": [
+    "ellipsis",
+    "glue",
+    "rlang"
+  ]
+}
